@@ -1,7 +1,7 @@
 using Sandbox;
 
 // ===== COMPOSANT JOUEUR (sur le GameObject joueur) =====
-public sealed class PlayerMoney : Component
+public sealed class MoneyComponent : Component
 {
     // [Sync] = synchronisé automatiquement sur le réseau
     [Sync] private int _money { get; set; } = 0;
@@ -116,18 +116,18 @@ public void OnTriggerEnter(Collider other)
         if (!isActive) return;
         
         // Cherche le composant PlayerMoney sur l'objet
-        var playerMoney = other.GameObject.Components.Get<PlayerMoney>();
+        var playerMoney = other.GameObject.Components.Get<MoneyComponent>();
         
         // Si pas trouvé, cherche dans le parent
         if (playerMoney == null && other.GameObject.Parent != null)
         {
-            playerMoney = other.GameObject.Parent.Components.Get<PlayerMoney>();
+            playerMoney = other.GameObject.Parent.Components.Get<MoneyComponent>();
         }
         
         // Si toujours pas trouvé, cherche dans le grand-parent
         if (playerMoney == null && other.GameObject.Parent?.Parent != null)
         {
-            playerMoney = other.GameObject.Parent.Parent.Components.Get<PlayerMoney>();
+            playerMoney = other.GameObject.Parent.Parent.Components.Get<MoneyComponent>();
         }
         
         if (playerMoney == null) return;
@@ -152,7 +152,7 @@ public sealed class ShopItem : Component
     {
         if (!Networking.IsHost) return; // Serveur seulement - empêche triche
         
-        var playerMoney = buyer.Components.Get<PlayerMoney>();
+        var playerMoney = buyer.Components.Get<MoneyComponent>();
         if (playerMoney == null) return;
         
         // ✅ SÉCURISÉ : Le serveur vérifie et retire l'argent

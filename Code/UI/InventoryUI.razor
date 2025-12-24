@@ -1,0 +1,50 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Sandbox
+
+@code {
+    [Property] public InventoryComponent Inventory { get; set; }
+
+    List<InventoryItem> Items = new();
+
+    protected override void OnUpdate()
+    {
+        if (Inventory != null)
+        {
+            var newItems = Inventory.GetAllItems();
+            // si la liste a changé, on force le re-render
+            if (!newItems.SequenceEqual(Items))
+            {
+                Items = newItems;
+            }
+        }
+    }
+
+    int TotalItems => Items.Count;
+    protected override int BuildHash() => System.HashCode.Combine( Items );
+
+}
+
+
+<root class="inventory-hud">
+
+    <!-- Nombre total d'items -->
+    <div class="total-items">
+        Items: @TotalItems
+    </div>
+
+    <!-- Slots -->
+    <div class="inventory-slots">
+        @for (int i = 0; i < 10; i++)
+        {
+            <div class="slot">
+                @if (i < Items.Count && Items[i] != null)
+                {
+                    <div class="item-name">@Items[i].ItemName</div>
+                }
+            </div>
+        }
+    </div>
+</root>
+

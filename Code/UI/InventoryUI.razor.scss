@@ -1,0 +1,42 @@
+.inventory-hud {
+    position: absolute;
+    bottom: 20px; /* distance du bas de l’écran */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-family: Arial, sans-serif;
+}
+
+.total-items {
+    color: white;
+    font-size: 14px;
+    text-align: center;
+}
+
+.inventory-slots {
+    display: flex;
+    gap: 8px;
+}
+
+.slot {
+    width: 64px;
+    height: 64px;
+    border: 2px solid #aaa;
+    position: relative;
+    background-color: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-name {
+    position: absolute;
+    top: -18px; /* au-dessus de la case */
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: white;
+}
